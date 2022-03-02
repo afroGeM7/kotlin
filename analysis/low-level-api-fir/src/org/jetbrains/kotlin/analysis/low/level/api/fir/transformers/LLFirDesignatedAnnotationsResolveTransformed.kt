@@ -23,12 +23,15 @@ internal class LLFirDesignatedAnnotationsResolveTransformed(
 
     private fun moveNextDeclaration(designationIterator: Iterator<FirDeclaration>) {
         if (!designationIterator.hasNext()) {
-            designation.declaration.transform<FirDeclaration, ResolutionMode>(this, ResolutionMode.ContextIndependent)
+            val declaration = designation.declaration
+            if (declaration is FirRegularClass) {
+                declaration.transform<FirDeclaration, ResolutionMode>(this, ResolutionMode.ContextIndependent)
+            }
             return
         }
         when (val nextElement = designationIterator.next()) {
             is FirFile -> {
-                withFile(nextElement) {
+                withFileAndScopes(nextElement) {
                     moveNextDeclaration(designationIterator)
                 }
             }
