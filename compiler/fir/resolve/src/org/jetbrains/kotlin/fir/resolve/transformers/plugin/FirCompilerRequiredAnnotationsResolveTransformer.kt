@@ -86,6 +86,10 @@ open class FirCompilerRequiredAnnotationsResolveTransformer(
         return annotationTransformer.transformRegularClass(regularClass, LinkedHashMultimap.create())
     }
 
+    override fun transformTypeAlias(typeAlias: FirTypeAlias, data: Any?): FirStatement {
+        return annotationTransformer.transformTypeAlias(typeAlias, LinkedHashMultimap.create())
+    }
+
     private fun FirFile.resolveAnnotations(
         annotations: Set<AnnotationFqn>,
         metaAnnotations: Set<AnnotationFqn>

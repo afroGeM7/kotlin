@@ -24,7 +24,7 @@ internal class LLFirDesignatedAnnotationsResolveTransformed(
     private fun moveNextDeclaration(designationIterator: Iterator<FirDeclaration>) {
         if (!designationIterator.hasNext()) {
             val declaration = designation.declaration
-            if (declaration is FirRegularClass) {
+            if (declaration is FirRegularClass || declaration is FirTypeAlias) {
                 declaration.transform<FirDeclaration, ResolutionMode>(this, ResolutionMode.ContextIndependent)
             }
             return
